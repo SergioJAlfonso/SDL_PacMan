@@ -1,0 +1,92 @@
+Sergio José Alfonso Rojas
+Daniel Illanes Morillas
+Grupo 15
+Pacman:
+	-Point2D getAct()
+	/*
+		Getter de la posición actual del Pacman.
+	*/
+	-void powerUp()
+	/*
+		Llamado desde Game para inicilizar el temporizador de la energía.
+	*/
+	-void move()
+	/*
+		Llamado en el Update de Pacman para moverlo, cambiar su textura y comer la celda.
+	*/
+	-void changeTexture()
+	/*
+		Método auxiliar de Pacman para calcular la dirección de la textura, apoyado en el enum "dirs".
+	*/
+	-void remake(Point2D pos)
+	/*
+		Resetea al Pacman a una nueva posición inicial, así como su energía, vida y movimiento. Llamado por Game al perder o ganar la partida.
+	*/
+	
+Game:
+	-void checkPosOutOfBounds(Point2D& pos)
+	/*
+		Método auxiliar que comprueba si una posición dada "pos" se sale de los límites del mapa y la corrige.
+	*/
+	-bool win()
+	/*
+		Usado para comprobar si se salió del nivel por derrota o por victoria.
+	*/
+	-void unpowerGhosts()
+	/*
+		Activa o desactiva a la textura de los fantasmas vulnerables y actualiza el estado de la variable "powerUp" de Game.
+	*/
+	-void eatCell(Point2D pos)
+	/*
+		Llamado por Pacman, comprueba que haya comida en "pos", se la come y actualiza "cellsLeft". Además, en caso de ser una Vitamina, se activa (o resetea) el tiempo de powerUp y se actualiza la textura de los fantasmas (o no).
+	*/
+	-int checkCollisions()
+	/*
+		Comprueba si Pacman ha colisionado con algún fantasma. Devuelve el número del fantasma en el array o -1 en función del resultado.
+	*/
+	-void kill()
+	/*
+		En función del número recibido por checkCollisions() y la energía del Pacman, mata al fantasma correspondiente o a Pacman
+	*/
+	-void checkExit()
+	/*
+		Cambia el valor de la variable exit si se pierde o gana, independientemente.
+	*/
+
+Ghost:
+	-void vulnerable()
+	/*
+		Activa o desactiva los frames de vulnerabilidad del fantasma 
+	*/
+	-void changeTexture(Vector2D const& dir)
+	/*
+		Método auxiliar de Pacman para calcular la dirección de la textura, apoyado en el enum "dirs".
+	*/
+	-Point2D getAct() 
+	/*
+		Getter de la posición actual del Fantasma.
+	*/
+	-void remake(Point2D pos)
+	/*
+		Establece y mueve a una nueva posición inicial al Ghost. Llamado por Game al perder o ganar la partida.
+	*/
+
+InfoBar:
+	-void render()
+	/*
+		Dibuja las vidas y el score que recibe del Game
+	*/
+	- void setHp(int v)
+	/*
+		Llamado por Game para actualizar la vida del Pacman
+	*/
+	-void reset()
+	/*
+		Llamado por Game para dejar en sus valores iniciales la vida y los puntos en caso de derrota
+	*/
+
+Main:
+	/*
+		Se avanza de nivel si se gana. De lo contrario, se vuelve a jugar el mismo nivel. Esto se repite hasta acabar los niveles. 
+		Game nunca se borra, sino que se mantiene, alterando los valores del Pacman y los fantasmas, y creando un nuevo mapa cada vez que el jugador gana o pierde.
+	*/
