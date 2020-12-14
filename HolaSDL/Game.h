@@ -50,7 +50,7 @@ const string firstLevel = "level01.dat";
 const string levelDir = "..\\levels\\";
 
 const uint ghostSpeed = 1;
-const uint pacmanSpeed = 10;
+const uint pacmanSpeed = 20;
 
 class Game
 {
@@ -114,6 +114,7 @@ private:
 	void kill(list<Ghost*>::iterator it);
 	void checkExit();
 	void loadNextLevel();
+	void storeGhost(Ghost* g);
 };
 #endif
 

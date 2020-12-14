@@ -23,6 +23,7 @@ private: //Sólo usada por Game (friend)
 	
 	virtual void render();
 	virtual void update() {};
+	virtual SDL_Rect getDestRect();
 
 	void removeMap();
 	void createMap(int h, int w);

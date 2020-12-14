@@ -10,8 +10,8 @@ void GameCharacter::render() {
 	SDL_Rect rect;
 	rect.w = cellSize;
 	rect.h = cellSize;
-	rect.x = pos.getX() + (offsetX * cellSize);
-	rect.y = pos.getY() + (offsetY * cellSize);
+	rect.x = pos.getX();
+	rect.y = pos.getY();
 
 	texture->renderFrame(rect, frameRow, frameCol);
 }

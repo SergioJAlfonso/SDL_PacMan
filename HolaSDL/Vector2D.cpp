@@ -38,10 +38,10 @@ bool Vector2D::operator==(Vector2D const& v){
 //	return is;
 //}
 
-//ostream& operator<<(ostream& out, const Vector2D& v) {
-//	out << v.x << " " << v.y;
-//	return out;
-//}
+ostream& operator<<(ostream& out, const Vector2D& v) {
+	out << v.x << " " << v.y;
+	return out;
+}
 
 void Vector2D::set(int x, int y){
 	this->x = x;

@@ -17,10 +17,12 @@ Pacman::Pacman(Point2D pos, int w, int h, Game* g, Point2D ipos, int v) : GameCh
 void Pacman::update(){
 	//Si la siguiente dirección a avanzar es viable
 	Point2D newPos = pos;
-	if (game->tryMove(getDestRect(), nextDir * speed, newPos)) {  
+	if (game->tryMove(getDestRect(), nextDir, newPos)) {  
+		dir = nextDir;
+		cout << dir << endl;
 		move(newPos);
 	}
-	else if (game->tryMove(getDestRect(), dir * speed, newPos)) { 
+	else if (game->tryMove(getDestRect(), dir, newPos)) { 
 		move(newPos);
 	}
 	/*if (energy > 0) {
@@ -35,6 +37,7 @@ void Pacman::move(const Point2D& newPos) {
 	game->eatCell(pos);
 	changeTexture(dir);
 }
+
 void Pacman::powerUp(){ 
 	energy = maxEnergy; 
 }

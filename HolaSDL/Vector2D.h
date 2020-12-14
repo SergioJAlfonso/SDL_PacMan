@@ -18,7 +18,7 @@ public:
 	Vector2D operator*(int e);
 	bool operator==(Vector2D const& v);
 	//friend istream& operator>>(istream& is, Vector2D& v);
-	//friend ostream& operator<<(ostream& out, const Vector2D& v);
+	friend ostream& operator<<(ostream& out, const Vector2D& v);
 	void setX(int x);
 	void setY(int y);
 };

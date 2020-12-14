@@ -60,6 +60,7 @@ void Ghost::update() {
 }
 
 void Ghost::render() {
+
 }
 
 void Ghost::vulnerable() {

@@ -26,8 +26,8 @@ void GameMap::render() {
 
 	for (int i = 0; i < height; ++i) {
 		for (int e = 0; e < width; ++e) {
-			rect.x = e * cellSize;
-			rect.y = (i+1) * cellSize; //Se le suma 1 para que se vea la barra de info
+			rect.x = (e + offsetX) * cellSize;
+			rect.y = (i + offsetY) * cellSize;
 			x = map[e][i];
 			if (x != 0) {
 				if (x == 1) x = 0;
@@ -54,6 +54,10 @@ void GameMap::createMap(int h, int w) {
 	}
 }
 
+SDL_Rect GameMap::getDestRect() {
+	return SDL_Rect{ pos.getX() * cellSize, pos.getY() * cellSize, width * cellSize, height * cellSize };
+}
+
 bool GameMap::intersectsWall(SDL_Rect rect) {
 	Point2D topLeft = game->SDLPointToMapCoords(rect.x, rect.y);
 	Point2D botRight = game->SDLPointToMapCoords(rect.x + rect.w, rect.y + rect.h);
@@ -61,7 +65,10 @@ bool GameMap::intersectsWall(SDL_Rect rect) {
 	for(int i = topLeft.getX(); i <= botRight.getX(); ++i)
 		for (int j = topLeft.getY(); j <= botRight.getY(); ++j)
 			if (map[i][j] == Wall)
+			{
 				return true;
-
+				cout << "No colisiona";
+			}
+	
 	return false;
 }

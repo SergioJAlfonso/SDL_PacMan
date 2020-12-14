@@ -12,9 +12,9 @@ protected:
 	Texture* texture;
 	int frameRow, frameCol, frameBase;
 	list<GameObject*>::iterator it;
-public:
 	GameCharacter(Point2D pos, int w, int h, Game* g, Point2D ipos, int v);
 	GameCharacter(ifstream& file, Game* g);
+public:
 	virtual void update();
 	virtual void render();
 	virtual void saveToFile(ifstream& file);

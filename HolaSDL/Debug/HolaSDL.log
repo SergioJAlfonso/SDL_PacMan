@@ -1,2 +1,3 @@
 ﻿  Game.cpp
+D:\Dany\Uni\TPV\Practica2\HolaSDL\Game.cpp(96,9): warning C4101: 'g': variable local sin referencia
   HolaSDL.vcxproj -> D:\Dany\Uni\TPV\Practica2\bin\HolaSDLDebug.exe

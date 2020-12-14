@@ -19,7 +19,11 @@ Game::Game(){
 
 	cellsLeft = 0;
 	actualLevel = 1;
-	
+
+	lives = maxHp;
+	score = 0;
+
+	actualEnergy = 0;
 	powerUp = false;
 
 	info = new InfoBar(Point2D(0,0), cellSize, cellSize ,this, textures[CharactersText], textures[DigitsText], lives, score);
@@ -95,9 +99,8 @@ void Game::loadObj(int code, int h, int w) {
 	case(6):
 	case(7):
 	case(8):
-		g = new Ghost(pos, cellSize, cellSize, this, pos, ghostSpeed, code - 5);
-		ghosts.push_back(g);
-		objects.push_back(g);
+		/*g = new Ghost(pos, cellSize, cellSize, this, pos, ghostSpeed, code - 5);
+		storeGhost(g);*/
 		break;
 	case(9):
 		pacman = new Pacman(pos, cellSize, cellSize, this, pos, pacmanSpeed);
@@ -141,6 +144,7 @@ void Game::update() {
 		delete *it;
 		objects.erase(it);
 	}
+	objectsToErase.clear();
 	if (levelS == LevelPassed) {
 		/*if (...);
 		else loadNextLevel();*/
@@ -167,34 +171,33 @@ void Game::render() {
 bool Game::tryMove(const SDL_Rect& rect, Vector2D dir, Point2D& newPos){ 
 	SDL_Rect mapRect = map->getDestRect();
 	newPos = newPos + dir;
-	
-	//OFFSET??
 
 	//Toroide
 	if (dir.getX() > 0 && (newPos.getX() + rect.w) >= mapRect.x + mapRect.w){
 		newPos.set(mapRect.x, newPos.getY());
 	}
-	else if (dir.getX() < 0 && (newPos.getX()) < mapRect.x) {
-		newPos.set(mapRect.x + mapRect.w, newPos.getY());
+	else if (dir.getX() < 0 && newPos.getX() < mapRect.x) {
+		newPos.set(mapRect.x + mapRect.w - cellSize, newPos.getY());
 	}
 	else if (dir.getY() > 0 && (newPos.getY() + rect.h) >= mapRect.y + mapRect.h) {
 		newPos.set(newPos.getX(), mapRect.y);
 	}
-	else if (dir.getY() < 0 && (newPos.getY()) < mapRect.y) {
-		newPos.set(newPos.getX(), mapRect.y + mapRect.h);
+	else if (dir.getY() < 0 && newPos.getY() <= mapRect.y) {
+		newPos.set(newPos.getX(), mapRect.y + mapRect.h - cellSize);
 	}
-	
+
 	SDL_Rect newRect{newPos.getX(), newPos.getY(), rect.w, rect.h};
+
 	return !(map->intersectsWall(newRect));
 }
 
 Point2D Game::mapCoordsToSDLPoint(Point2D coords){
-	Point2D SDLPoint{coords.getX() * cellSize /*+ offsetX * cellSize*/, coords.getY() * cellSize /*+ offsetY * cellSize*/};
+	Point2D SDLPoint{coords.getX() * cellSize + offsetX * cellSize, coords.getY() * cellSize + offsetY * cellSize};
 	return SDLPoint;
 }
 
 Point2D Game::SDLPointToMapCoords(Point2D point){
-	Point2D SDLPoint{ point.getX() / cellSize /*- offsetX * cellSize*/, point.getY() / cellSize /*- offsetY * cellSize*/ };
+	Point2D SDLPoint{ point.getX() / cellSize - offsetX, point.getY() / cellSize - offsetY};
 	return SDLPoint;
 }
 
@@ -204,7 +207,7 @@ Point2D Game::mapCoordsToSDLPoint(int x, int y) {
 }
 
 Point2D Game::SDLPointToMapCoords(int x, int y) {
-	Point2D SDLPoint{ x / cellSize - offsetX * cellSize, y / cellSize - offsetY * cellSize };
+	Point2D SDLPoint{ x / cellSize - offsetX, y / cellSize - offsetY};
 	return SDLPoint;
 }
 
@@ -311,6 +314,12 @@ void Game::loadSavedGame() {
 	//map = new GameMap(file);
 	//pacman = new Pacman(file);
 	file.close();
+}
+
+void Game::storeGhost(Ghost* g) {
+	auto it = objects.insert(objects.end(), g);
+	g->setItList(it);
+	ghosts.push_back(g);
 }
 
 void Game::eraseGhost(list<GameObject*>::iterator it) {
