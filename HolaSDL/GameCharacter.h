@@ -14,6 +14,7 @@ protected:
 	list<GameObject*>::iterator it;
 	GameCharacter(Point2D pos, int w, int h, Game* g, Point2D ipos, int v);
 	GameCharacter(ifstream& file, Game* g);
+	virtual void changeTexture();
 public:
 	virtual void update();
 	virtual void render();

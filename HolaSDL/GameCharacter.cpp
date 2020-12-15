@@ -35,3 +35,22 @@ void GameCharacter::saveToFile(ifstream& ifs) {
 
 }
 
+void GameCharacter::changeTexture() {
+	if (dir.getX() != 0) {
+		if (dir.getX() > 0) {
+			frameRow = Right;
+		}
+		else {
+			frameRow = Left;
+		}
+	}
+	else {
+		if (dir.getY() > 0) {
+			frameRow = Down;
+		}
+		else {
+			frameRow = Up;
+		}
+	}
+}
+

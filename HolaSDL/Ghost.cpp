@@ -56,11 +56,7 @@ void Ghost::update() {
 	//Realizamos movimiento
 	pos = pos + dir * speed;
 
-	changeTexture(dir);
-}
-
-void Ghost::render() {
-
+	changeTexture();
 }
 
 void Ghost::vulnerable() {
@@ -74,23 +70,8 @@ void Ghost::vulnerable() {
 }
 
 //Animación de los fantasmas 
-void Ghost::changeTexture(Vector2D const &dir) {
+void Ghost::changeTexture() {
 	if (frameCol == frameBase){
-		if (dir.getX() != 0) {
-			if (dir.getX() > 0){
-				frameRow = Right;
-			}
-			else{
-				frameRow = Left;
-			}
-		}
-		else {
-			if (dir.getY() > 0) {
-				frameRow = Down;
-			}
-			else {
-				frameRow = Up;
-			}
-		}
+		GameCharacter::changeTexture();
 	}
 }

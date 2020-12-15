@@ -17,12 +17,12 @@ Pacman::Pacman(Point2D pos, int w, int h, Game* g, Point2D ipos, int v) : GameCh
 void Pacman::update(){
 	//Si la siguiente dirección a avanzar es viable
 	Point2D newPos = pos;
+	
 	if (game->tryMove(getDestRect(), nextDir, newPos)) {  
 		dir = nextDir;
-		cout << dir << endl;
 		move(newPos);
 	}
-	else if (game->tryMove(getDestRect(), dir, newPos)) { 
+	else if (game->tryMove(getDestRect(), dir, newPos = pos)) {
 		move(newPos);
 	}
 	/*if (energy > 0) {
@@ -35,7 +35,7 @@ void Pacman::update(){
 void Pacman::move(const Point2D& newPos) {
 	pos = newPos;
 	game->eatCell(pos);
-	changeTexture(dir);
+	changeTexture();
 }
 
 void Pacman::powerUp(){ 
@@ -54,21 +54,21 @@ void Pacman::handleEvent() {
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_UP:
-				nextDir.set(0, -1);
+				nextDir.setY(-1);
 				break;
 			case SDLK_DOWN:
-				nextDir.set(0, 1);
+				nextDir.setY(1);
 				break;
 			case SDLK_LEFT:
-				nextDir.set(-1, 0);
+				nextDir.setX(-1);
 				break;
 			case SDLK_RIGHT:
-				nextDir.set(1, 0);
+				nextDir.setX(1);
 				break;
 			default:
 				break;
 			}
-
+			
 			//cout << "(" << act.getX() << ", " << act.getY() << ")"<< endl;
 		}
 	}
@@ -80,24 +80,8 @@ void Pacman::die() {
 }
 
 //Animación del pacman dependiendo de la dirección
-void Pacman::changeTexture(Vector2D const& dir) {
-	if (dir.getX() != 0) {
-		if (dir.getX() > 0) {
-			frameRow = Right;
-		}
-		else {
-			frameRow = Left;
-		}
-	}
-	else {
-		if (dir.getY() > 0) {
-			frameRow = Down;
-		}
-		else {
-			frameRow = Up;
-		}
-	}
-
+void Pacman::changeTexture() {
+	GameCharacter::changeTexture();
 	if (frameCol == frameBase) //Animación de abrir y cerrar boca
 		frameCol++;
 	else

@@ -30,19 +30,11 @@ Game::Game(){
 	objects.push_back(info);
 
 	loadMap(firstLevel);
-	
-	//for (int i = 0; i < numGhosts; i++) {
-	//	ghosts[i] = nullptr;
-	//}
 }
 
 Game::~Game(){ //MEJOR DESTRUCTORA -------------
 	delete map;
 	delete pacman;
-
-	//for (int i = 0; i < numGhosts; ++i) {
-	//	delete ghosts[i];
-	//}
 
 	for (int i = 0; i < numTextures; ++i) {
 		delete textures[i];
@@ -66,12 +58,8 @@ void Game::loadMap(string file) {
 		input >> h;
 		input >> w;
 
-		//if (map != nullptr)
-			//map->remake(h, w);
-		//else {
 		map = new GameMap(Point2D(offsetX, offsetY), w, h, this);
 		objects.push_back(map);
-		//}
 
 		for (int i = 0; i < h; ++i) {
 			for (int e = 0; e < w; ++e) {
@@ -99,8 +87,8 @@ void Game::loadObj(int code, int h, int w) {
 	case(6):
 	case(7):
 	case(8):
-		/*g = new Ghost(pos, cellSize, cellSize, this, pos, ghostSpeed, code - 5);
-		storeGhost(g);*/
+		g = new Ghost(pos, cellSize, cellSize, this, pos, ghostSpeed, code - 5);
+		storeGhost(g);
 		break;
 	case(9):
 		pacman = new Pacman(pos, cellSize, cellSize, this, pos, pacmanSpeed);
@@ -140,11 +128,14 @@ void Game::update() {
 	//kill(checkCollisions());
 
 	for (GameObject* o : objects) o->update();
+
 	for (auto it: objectsToErase) {
 		delete *it;
 		objects.erase(it);
 	}
+
 	objectsToErase.clear();
+	
 	if (levelS == LevelPassed) {
 		/*if (...);
 		else loadNextLevel();*/

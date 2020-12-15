@@ -18,5 +18,5 @@ public:
 private:
 	void move(const Point2D& newPos);
 	//Cambia la textura de Pacman en funcion de dir
-	void changeTexture(Vector2D const& dir);
+	void changeTexture();
 };

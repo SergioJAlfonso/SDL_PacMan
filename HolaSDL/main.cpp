@@ -19,20 +19,18 @@ int main(int argc, char* argv[]) {
 
 	string s = "level01.dat";
 	
-	Game *g = new Game(); //PUNTERO INNECASRIO--------
+	Game g; //PUNTERO INNECASRIO--------
 
 	// Crea un puntero a Game y ejecuta run por cada nivel //TRY CATCH----------
 	while(cont <= LEVELS){
 		//Iterador de niveles
-		g->loadMap(s);
-		g->run();
-		if (g->win()) {
+		g.run();
+		if (g.win()) {
 			++cont;
 			s = "level";
 			if (cont < 10) s += "0";
 			s += to_string(cont) + ".dat";
 		}	
 	}
-	delete g;
 	return 0;
 }

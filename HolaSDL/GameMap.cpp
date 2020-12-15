@@ -65,10 +65,7 @@ bool GameMap::intersectsWall(SDL_Rect rect) {
 	for(int i = topLeft.getX(); i <= botRight.getX(); ++i)
 		for (int j = topLeft.getY(); j <= botRight.getY(); ++j)
 			if (map[i][j] == Wall)
-			{
 				return true;
-				cout << "No colisiona";
-			}
 	
 	return false;
 }
